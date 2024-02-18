@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="2024-02-18-2-insert-servers" author="MairianeT">
+        <insert tableName="server">
+            <column  name="creatorId"  value="1111"/>
+            <column  name="userId"  value="2222"/>
+            <column  name="code"  value="1234"/>
+            <column  name="isPublic"  value="true"/>
+        </insert>
+        <insert tableName="server">
+            <column  name="creatorId"  value="1212"/>
+            <column  name="userId"  value="2121"/>
+            <column  name="code"  value="5678"/>
+            <column  name="isPublic"  value="false"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
