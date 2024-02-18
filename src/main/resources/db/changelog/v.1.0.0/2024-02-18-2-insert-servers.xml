@@ -6,16 +6,16 @@
 
     <changeSet id="2024-02-18-2-insert-servers" author="MairianeT">
         <insert tableName="server">
-            <column  name="creatorId"  value="1111"/>
-            <column  name="userId"  value="2222"/>
+            <column  name="creator_id"  value="1111"/>
+            <column  name="user_id"  value="2222"/>
             <column  name="code"  value="1234"/>
-            <column  name="isPublic"  value="true"/>
+            <column  name="is_public"  value="true"/>
         </insert>
         <insert tableName="server">
-            <column  name="creatorId"  value="1212"/>
-            <column  name="userId"  value="2121"/>
+            <column  name="creator_id"  value="1212"/>
+            <column  name="user_id"  value="2121"/>
             <column  name="code"  value="5678"/>
-            <column  name="isPublic"  value="false"/>
+            <column  name="is_public"  value="false"/>
         </insert>
     </changeSet>
 

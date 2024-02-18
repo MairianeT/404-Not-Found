@@ -9,16 +9,16 @@
             <column name="id" type="serial">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="creatorId" type="varchar(100)">
+            <column name="creator_id" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
-            <column name="userId" type="varchar(100)">
+            <column name="user_id" type="varchar(100)">
                 <constraints nullable="true"/>
             </column>
             <column name="code" type="int">
                 <constraints nullable="false"/>
             </column>
-            <column name="isPublic" type="boolean">
+            <column name="is_public" type="boolean">
                 <constraints nullable="false"/>
             </column>
         </createTable>

@@ -17,15 +17,15 @@ public class Server {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "creatorId")
+    @Column(name = "creator_id")
     private String creatorId;
 
-    @Column(name = "userId")
+    @Column(name = "user_id")
     private String userId;
 
     @Column(name = "code")
     private int code;
 
-    @Column(name = "isPublic")
+    @Column(name = "is_public")
     private Boolean isPublic;
 }
