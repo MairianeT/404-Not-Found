@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 public class ServerServiceImpl implements ServerService {
     private final ServerRepository serverRepository;
     private final ServerMapper serverMapper;
@@ -30,14 +30,31 @@ public class ServerServiceImpl implements ServerService {
     }
 
     @Override
-    public ServerDto findById(Long id) {
-        return Optional.of(getById(id)).map(serverMapper::modelToDto).get();
+    @Transactional
+    public ServerDto findById(Long id, String userId) {
+        return serverRepository.findById(id)
+                .map(server -> {
+                    if (server.getIsPublic()) {
+                        server.setUserId(userId);
+                        server.setIsPublic(false);
+                        serverRepository.save(server);
+                        return serverMapper.modelToDto(server);
+                    } else {
+                        return null;
+                    }
+                })
+                .orElse(null);
     }
 
     @Override
-    public ServerDto findByCode(int code) {
+    @Transactional
+    public ServerDto findByCodeAndSetUserId(int code, String userId) {
         return serverRepository.findByCode(code)
-                .map(serverMapper::modelToDto)
+                .map(server -> {
+                    server.setUserId(userId);
+                    serverRepository.save(server);
+                    return serverMapper.modelToDto(server);
+                })
                 .orElse(null);
     }
 
@@ -54,8 +71,7 @@ public class ServerServiceImpl implements ServerService {
     @Override
     @Transactional
     public void deleteServerById(Long id) {
-        var server = getById(id);
-        serverRepository.delete(server);
+        serverRepository.deleteById(id);
     }
 
     private Server getById(Long id) {

@@ -12,6 +12,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
+
 @RequestMapping("api/v1")
 @RequiredArgsConstructor
 public class ServerController {
@@ -22,9 +23,9 @@ public class ServerController {
         return serverService.findAll();
     }
 
-    @GetMapping("/servers/{code}")
-    public ResponseEntity<ServerDto> getServerByCode(@PathVariable int code) {
-        ServerDto serverDto = serverService.findByCode(code);
+    @GetMapping("/servers/connect/{code}")
+    public ResponseEntity<ServerDto> getServerByCode(@PathVariable("code") int code, @RequestParam("userId") String userId) {
+        ServerDto serverDto = serverService.findByCodeAndSetUserId(code, userId);
         if (serverDto != null) {
             return ResponseEntity.ok().body(serverDto);
         } else {
@@ -37,28 +38,21 @@ public class ServerController {
         return serverService.findPublic();
     }
 
-    @GetMapping("/servers/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ServerDto> getServer(@PathVariable Long id) {
-        return ResponseEntity.ok().body(serverService.findById(id));
+    @GetMapping("/public-servers/connect/{id}")
+    public ResponseEntity<ServerDto> getServer(@PathVariable("id") Long id, @RequestParam("userId") String userId) {
+        return ResponseEntity.ok().body(serverService.findById(id, userId));
     }
 
-    @PostMapping("/server")
-    public ResponseEntity<ServerDto> createBook( @RequestBody ServerDto book) throws URISyntaxException {
-        ServerDto result = serverService.save(book);
+    @PostMapping("/servers")
+    public ResponseEntity<ServerDto> createBook( @RequestBody ServerDto server) throws URISyntaxException {
+        ServerDto result = serverService.save(server);
         return ResponseEntity.created(new URI("/api/servers/" + result.getId()))
                 .body(result);
     }
 
-    @PutMapping("/server/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ServerDto> updateBook( @PathVariable Long id, @RequestBody ServerDto server) {
-        return ResponseEntity.ok().body(serverService.save(server));
-    }
-
-    @DeleteMapping("/server/{id}")
-    public ResponseEntity<?> deleteBook(@PathVariable Long id) {
+    @DeleteMapping("/servers/{id}")
+    public ResponseEntity<Void> deleteServer(@PathVariable("id") Long id) {
         serverService.deleteServerById(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

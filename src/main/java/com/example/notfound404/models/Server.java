@@ -20,7 +20,7 @@ public class Server {
     @Column(name = "creator_id")
     private String creatorId;
 
-    @Column(name = "user_id")
+    @Column(name = "user_id", nullable = true)
     private String userId;
 
     @Column(name = "code")
