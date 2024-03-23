@@ -5,6 +5,7 @@ import com.example.notfound404.repository.ServerRepository;
 import com.example.notfound404.service.ServerService;
 import com.example.notfound404.service.convertor.ServerMapper;
 import com.example.notfound404.service.dto.ServerDto;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,11 @@ public class ServerServiceImpl implements ServerService {
     @Override
     @Transactional
     public ServerDto findByCodeAndSetUserId(int code, String userId) {
+        List<Server> serversToDelete = serverRepository.findByCreatorIdOrUserId(userId, userId);
+        if (!serversToDelete.isEmpty()) {
+            serverRepository.deleteAll(serversToDelete);
+        }
+
         return serverRepository.findByCode(code)
                 .map(server -> {
                     server.setUserId(userId);
@@ -61,6 +67,11 @@ public class ServerServiceImpl implements ServerService {
     @Override
     @Transactional
     public ServerDto save(ServerDto server) {
+        List<Server> serversToDelete = serverRepository.findByCreatorIdOrUserId(server.getCreatorId(), server.getCreatorId());
+        if (!serversToDelete.isEmpty()) {
+            serverRepository.deleteAll(serversToDelete);
+        }
+
         int uniqueCode = generateUniqueCode();
         server.setCode(uniqueCode);
         return serverMapper.modelToDto(serverRepository.save(
@@ -72,6 +83,15 @@ public class ServerServiceImpl implements ServerService {
     @Transactional
     public void deleteServerById(Long id) {
         serverRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteAllServerByIdByUserId(String userId) {
+        List<Server> serversToDelete = serverRepository.findByCreatorIdOrUserId(userId, userId);
+        if (!serversToDelete.isEmpty()) {
+            serverRepository.deleteAll(serversToDelete);
+        }
     }
 
     private Server getById(Long id) {

@@ -11,4 +11,5 @@ public interface ServerService {
     ServerDto findByCodeAndSetUserId (int code, String userId);
     ServerDto save (ServerDto server);
     void deleteServerById (Long id);
+    void deleteAllServerByIdByUserId (String userId);
 }

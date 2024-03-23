@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface ServerRepository extends JpaRepository<Server, Long> {
     List<Server> findByIsPublicTrue();
     Optional<Server> findByCode(int code);
+    List<Server> findByCreatorIdOrUserId(String creatorId, String userId);
 }

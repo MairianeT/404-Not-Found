@@ -23,7 +23,7 @@ public class ServerController {
         return serverService.findAll();
     }
 
-    @GetMapping("/servers/connect/{code}")
+    @PutMapping("/servers/connect/{code}")
     public ResponseEntity<ServerDto> getServerByCode(@PathVariable("code") int code, @RequestParam("userId") String userId) {
         ServerDto serverDto = serverService.findByCodeAndSetUserId(code, userId);
         if (serverDto != null) {
@@ -44,7 +44,7 @@ public class ServerController {
     }
 
     @PostMapping("/servers")
-    public ResponseEntity<ServerDto> createBook( @RequestBody ServerDto server) throws URISyntaxException {
+    public ResponseEntity<ServerDto> createServer( @RequestBody ServerDto server) throws URISyntaxException {
         ServerDto result = serverService.save(server);
         return ResponseEntity.created(new URI("/api/servers/" + result.getId()))
                 .body(result);
@@ -53,6 +53,12 @@ public class ServerController {
     @DeleteMapping("/servers/{id}")
     public ResponseEntity<Void> deleteServer(@PathVariable("id") Long id) {
         serverService.deleteServerById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/servers/byUserId/{userId}")
+    public ResponseEntity<Void> deleteServersByUserId(@PathVariable("userId") String userId) {
+        serverService.deleteAllServerByIdByUserId(userId);
         return ResponseEntity.noContent().build();
     }
 }
