@@ -4,9 +4,9 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="2024-02-18-1-create-table-server" author="MairianeT">
-        <createTable tableName="server">
-            <column name="id" type="serial">
+    <changeSet id="2024-02-18-1-create-table-game_server" author="MairianeT">
+        <createTable tableName="game_server">
+            <column name="id" type="uuid">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="creator_id" type="varchar(100)">
@@ -22,6 +22,33 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+
+        <createTable tableName="user">
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="cookie" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="game_server"
+                baseColumnNames="creator_id"
+                constraintName="fk_game_server_creator_id"
+                referencedTableName="user"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"/>
+
+        <addForeignKeyConstraint
+                baseTableName="game_server"
+                baseColumnNames="user_id"
+                constraintName="fk_game_server_user_id"
+                referencedTableName="user"
+                referencedColumnNames="id"
+                onDelete="SET NULL"
+                onUpdate="CASCADE"/>
     </changeSet>
 
 </databaseChangeLog>

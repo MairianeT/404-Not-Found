@@ -1,6 +1,7 @@
 package com.example.notfound404.models;
 
 import jakarta.persistence.*;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,19 +10,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "server")
-public class Server {
+@Table(name = "game_server")
+public class GameServer {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @Column(name = "creator_id")
-    private String creatorId;
+    private UUID creatorId;
 
     @Column(name = "user_id", nullable = true)
-    private String userId;
+    private UUID userId;
 
     @Column(name = "code")
     private int code;

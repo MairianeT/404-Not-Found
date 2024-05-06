@@ -4,13 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ServerDto {
-    private Long id;
-    private String creatorId;;
-    private String userId;
+public class GameServerDto {
+    private UUID id;
+    private UUID creatorId;;
+    private UUID userId;
     private int code;
     private Boolean isPublic;
 }
