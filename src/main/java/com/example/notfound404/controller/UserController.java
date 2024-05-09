@@ -39,20 +39,16 @@ public class UserController {
     public ResponseEntity<String> validateUser(
             @PathVariable("id") UUID id,
             HttpServletRequest request) {
-
-        String cookieValue = extractCookieValue(request);
-
-        User user = userService.getUserById(id);
-
-        if (user != null) {
-            if (userService.isCookieValid(id, cookieValue)) {
-                return ResponseEntity.ok("User validated successfully.");
-            } else {
-                return ResponseEntity.badRequest().body("Invalid cookie for the user.");
-            }
+        if (isValidatedUser(id, request)) {
+            return ResponseEntity.ok("User validated successfully.");
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body("Invalid cookie for the user.");
         }
+    }
+
+    public Boolean isValidatedUser( UUID id, HttpServletRequest request) {
+        String cookieValue = extractCookieValue(request);
+        return userService.isCookieValid(id, cookieValue);
     }
 
     private String extractCookieValue(HttpServletRequest request) {

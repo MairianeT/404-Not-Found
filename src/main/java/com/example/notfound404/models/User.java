@@ -1,7 +1,6 @@
 package com.example.notfound404.models;
 
 import jakarta.persistence.*;
-import jakarta.servlet.http.Cookie;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

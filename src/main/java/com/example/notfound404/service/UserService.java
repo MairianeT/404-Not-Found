@@ -1,6 +1,7 @@
 package com.example.notfound404.service;
 
 import com.example.notfound404.models.User;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.UUID;
 
