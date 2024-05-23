@@ -9,10 +9,10 @@
             <column name="id" type="uuid">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="creator_id" type="varchar(100)">
+            <column name="creator_id" type="uuid">
                 <constraints nullable="false"/>
             </column>
-            <column name="user_id" type="varchar(100)">
+            <column name="user_id" type="uuid">
                 <constraints nullable="true"/>
             </column>
             <column name="code" type="int">
@@ -32,6 +32,36 @@
             </column>
         </createTable>
 
+        <createTable tableName="object">
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="server_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="text_value" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="is_changed" type="boolean">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="object"
+                baseColumnNames="server_id"
+                constraintName="fk_object_server_id"
+                referencedTableName="game_server"
+                referencedColumnNames="id"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"/>
+
         <addForeignKeyConstraint
                 baseTableName="game_server"
                 baseColumnNames="creator_id"
@@ -50,5 +80,4 @@
                 onDelete="SET NULL"
                 onUpdate="CASCADE"/>
     </changeSet>
-
 </databaseChangeLog>
